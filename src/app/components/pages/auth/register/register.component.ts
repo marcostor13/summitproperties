@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from './../../../../services/api.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import * as action from '../../../../reducers/auth/auth.actions';
 
 
 @Component({
@@ -15,9 +17,11 @@ export class RegisterComponent implements OnInit {
   response: String = ''
   form: FormGroup
   isLoad: Boolean = false
+
+  auth$: Observable<Object>
  
 
-  constructor(private router: Router, private api: ApiService) {
+  constructor(private router: Router, private api: ApiService, private store: Store<{ auth: Object }>) {
     this.validateSession()
     this.form = this.createFormGroup();
   }
@@ -34,10 +38,20 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  validateSession(){
-    if (sessionStorage.getItem('ud') && sessionStorage.getItem('ud') != ''){
-      this.router.navigate(['/'])
-    }
+  validateSession() {
+
+    this.auth$ = this.store.pipe(select('auth'))
+    this.auth$.subscribe((auth: any) => {
+      if (auth) {
+        this.router.navigate(['/'])
+      } else {
+        const authData = this.api.verifySession()
+        if (authData !== false) {
+          this.store.dispatch(action.login({ user: authData }))
+          this.router.navigate(['/']);
+        }
+      }
+    })
   }
 
   onRegister(){    
@@ -60,12 +74,12 @@ export class RegisterComponent implements OnInit {
           const self = this
           if (result) {
             if (result.status == 301){
-              this.response = 'El usuario ya existe'
+              this.response = 'User already exists'
             }else{
-              this.response = 'Usuario Registrado'
+              this.response = 'The user already registered'
               setTimeout(function () {
-                self.router.navigate(['/login']);
-              }, 3000)
+                self.router.navigate(['/auth/login']);
+              }, 2000)
             }
 
           }
@@ -74,12 +88,12 @@ export class RegisterComponent implements OnInit {
             this.isLoad = false
             this.api.c('Error', error)
             if(error.error.status === 422){
-              this.response = 'Usuario Registrado'
+              this.response = 'The user already registered'
             }
 
           });
       }else{
-        this.response = 'Las constraseñas no coinciden'
+        this.response = "Passwords don't match"
       }     
 
     }

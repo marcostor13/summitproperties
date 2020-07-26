@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Validator;
 use App\User;
+use App\Role;
 
 class JWTAuthController extends Controller
 {
@@ -45,6 +46,11 @@ class JWTAuthController extends Controller
                     $validator->validated(),
                     ['password' => bcrypt($request->password)]
                 ));
+
+        $role = new Role;
+        $role->userid = $user->id();
+        $role->roleid = 2; 
+        $role->save();
 
         return response()->json([
             'message' => 'Successfully registered',

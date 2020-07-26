@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CommmissarsEvents extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CommmissarsEvents extends Migration
      */
     public function up()
     {
-        Schema::create('commissars_events', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->integer('commissarid');
-            $table->integer('eventid');           
-            $table->string('task')->comment('Juez / Observador');           
+            $table->integer('userid');
+            $table->integer('roleid')->comment('Admin 1, User 2');
+            $table->timestamps();
         });
     }
 
@@ -28,6 +28,6 @@ class CommmissarsEvents extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('commissars_events');
+        Schema::dropIfExists('roles');
     }
 }

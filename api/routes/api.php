@@ -30,5 +30,15 @@ Route::group([
     Route::post('logout', 'JWTAuthController@logout');
     Route::post('refresh', 'JWTAuthController@refresh');
     Route::get('profile', 'JWTAuthController@profile');
-
 });
+
+Route::group([
+    'middleware' => ['auth.jwt'],    
+], function ($router) {
+
+    //ROLE
+    Route::post('getRole', 'ServiceController@getRole');
+    
+});
+
+

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -10,9 +11,9 @@ export class HeaderComponent implements OnInit {
 
   menuHeader: Boolean = false
 
-  @Input() user: any;
+  @Input() dataUser: any;
 
-  constructor() { 
+  constructor(private api: ApiService) { 
     
   }
 
@@ -22,6 +23,10 @@ export class HeaderComponent implements OnInit {
 
   toogleMenu(){
     this.menuHeader = this.menuHeader ? false: true
+  }
+
+  logout(){
+    this.api.logout(this.dataUser)
   }
 
 }
