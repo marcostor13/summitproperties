@@ -3,42 +3,37 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/pages/auth/login/login.component';
-import { RegisterComponent } from './components/pages/auth/register/register.component';
-import { HomeComponent } from './components/pages/home/home.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HeaderComponent } from './components/partials/header/header.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoadComponent } from './components/partials/load/load.component';
-import { MenuComponent } from './components/partials/menu/menu.component';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { StoreModule } from '@ngrx/store';
-import { authReducer } from './reducers/auth/auth.reducer'
+import { authReducer } from './reducers/auth/auth.reducer';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { es_ES } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import es from '@angular/common/locales/es';
 
+
+registerLocaleData(es);
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    HomeComponent,
-    HeaderComponent,
-    LoadComponent,
-    MenuComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebase),
-    StoreModule.forRoot({ auth: authReducer })
-  ],
-  providers: [],
+    StoreModule.forRoot({ auth: authReducer }),
+    AppRoutingModule,    
+  ], 
+  providers: [{ provide: NZ_I18N, useValue: es_ES }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

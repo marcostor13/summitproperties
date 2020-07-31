@@ -1,0 +1,33 @@
+.menu-container, .container-container{
+    min-height: 100vh-7.4;
+}
+
+:host ::ng-deep .avatar-uploader > .ant-upload {
+        width: 140px;
+        height: 140px;
+      }
+
+.image{
+    min-height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
+
+.image2{
+    min-height: 600px;
+    min-width: 600px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+p-lightbox > div.ng-star-inserted  img{
+    
+        max-width: 200px !important;
+    
+}

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/interfaces/user.interface';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-menu',
@@ -7,7 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  auth$: Observable<User>
+
+  path: String = window.location.pathname
+
+  constructor(private store: Store<{ auth: User }>) {
+    this.auth$ = this.store.pipe(select('auth'))
+   }
 
   ngOnInit(): void {
   }

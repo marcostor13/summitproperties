@@ -30,14 +30,34 @@ Route::group([
     Route::post('logout', 'JWTAuthController@logout');
     Route::post('refresh', 'JWTAuthController@refresh');
     Route::get('profile', 'JWTAuthController@profile');
+    
 });
 
 Route::group([
-    'middleware' => ['auth.jwt'],    
+    'middleware' => ['jwt.verify'],    
 ], function ($router) {
 
     //ROLE
     Route::post('getRole', 'ServiceController@getRole');
+    Route::post('addProperty', 'ServiceController@addProperty');
+    Route::post('getProperties', 'ServiceController@getProperties');
+    Route::post('getPropertyById', 'ServiceController@getPropertyById');    
+    Route::post('editProperty', 'ServiceController@editProperty');
+    Route::post('deleteProperty', 'ServiceController@deleteProperty');
+    Route::post('getFiles', 'ServiceController@getFiles');
+    Route::post('addFile', 'ServiceController@addFile');
+    Route::post('deleteFile', 'ServiceController@deleteFile');
+    Route::post('saveDescription', 'ServiceController@saveDescription');  
+    
+    Route::post('addItem', 'ServiceController@addItem');    
+    Route::post('getList', 'ServiceController@getList');    
+    Route::post('updateItem', 'ServiceController@updateItem');
+    Route::post('deleteList', 'ServiceController@deleteList');
+    Route::post('deleteItem', 'ServiceController@deleteItem');
+
+    
+
+
     
 });
 

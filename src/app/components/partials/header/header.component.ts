@@ -1,3 +1,4 @@
+import { NgModule } from '@angular/core';
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { Observable } from 'rxjs';
@@ -10,6 +11,7 @@ import { Observable } from 'rxjs';
 export class HeaderComponent implements OnInit {
 
   menuHeader: Boolean = false
+  
 
   @Input() dataUser: any;
 

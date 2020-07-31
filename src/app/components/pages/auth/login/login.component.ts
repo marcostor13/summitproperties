@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store, select} from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as action from '../../../../reducers/auth/auth.actions';
+import { User } from './../../../../interfaces/user.interface';
 
 
 @Component({
@@ -64,10 +65,17 @@ export class LoginComponent implements OnInit {
         }
         this.api.api(data).subscribe((result: any) => {
           this.isLoad = false
-          if (result) {    
-            sessionStorage.setItem('ud', JSON.stringify(result))     
-            this.store.dispatch(action.login({ user: result }))    
-            this.router.navigate(['/']);
+          if (result) {  
+            const dataUser:User = {
+              id: result.user.id,
+              name: result.user.name,
+              email: result.user.email,
+              token: result.token.original.access_token,
+              roleid: result.user.roleid  
+            }
+            sessionStorage.setItem('ud', JSON.stringify(dataUser))     
+            this.store.dispatch(action.login({ user: dataUser }))    
+            this.router.navigate(['/'])
           }
         },
         error => {

@@ -1,14 +1,12 @@
 <div>
-    <ul class="list-unstyled col-12 m-0 bg-color1 p-0">
-        <li class="cursor pl-5 p-3 text-white">
+    <ul *ngIf="(auth$ | async)" class="list-unstyled col-12 m-0 bg-color1 p-0">
+        <li [routerLink]="['/properties']" [ngClass]="{'active': path.indexOf('properties')}" class="cursor pl-5 p-3 text-white">
             <i class="pi pi-chart-bar"></i>
-            <label class="ml-4">Panel</label>
+            <label class="ml-4">Properties</label>
         </li>
-        <li class="cursor pl-5 p-3 text-white">
-            <i class="pi pi-calendar"></i>
-            <label class="ml-4">Eventos</label>
-        </li>
-        <li class="cursor pl-5 p-3 text-white">
+     
+        
+        <!-- <li class="cursor pl-5 p-3 text-white">
             <i class="pi pi-bookmark"></i>
             <label class="ml-4">Sedes</label>
         </li>
@@ -31,7 +29,7 @@
         <li class="cursor pl-5 p-3 text-white">
             <i class="pi pi-circle-on"></i>
             <label class="ml-4">Deportes</label>
-        </li>
+        </li> -->
         
     </ul>
 </div>

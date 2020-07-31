@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import * as action from '../reducers/auth/auth.actions';
 import { Router } from '@angular/router';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class ApiService {
 
   url: string = ''; // disponer url de su servidor que tiene las páginas PHP
 
-  constructor(private http: HttpClient, private store: Store, private router: Router) {
+  constructor(private http: HttpClient, private store: Store, private router: Router, private storage: AngularFireStorage) {
     if (window.location.href.indexOf('summitproperties' ) > -1) {
       this.url = 'http://api.summitproperties.tk/api/';
     } else {
@@ -29,23 +30,11 @@ export class ApiService {
     }else if(data.type == 'get'){
       return this.http.get(`${this.url + data.service}`, { headers: headers })
     }
-  }
-
-  getRole(userid) {
-    return this.api({
-      service: 'getRole',
-      type: 'post',
-      userid: userid
-    })
-  }
+  }  
 
   verifySession(){
     if (sessionStorage.getItem('ud') && sessionStorage.getItem('ud') != '') {
-      const user = JSON.parse(sessionStorage.getItem('ud'))
-      return {
-        token: user.token.original.access_token,
-        user: user.user.original 
-      }
+      return JSON.parse(sessionStorage.getItem('ud'))
     }else{
       return false
     }
@@ -72,6 +61,11 @@ export class ApiService {
       }
     }
     )
+  }
+
+
+  deleteProductImage(downloadUrl) {
+    this.storage.storage.refFromURL(downloadUrl).delete();
   }
 
   c(title:String, message:String) {

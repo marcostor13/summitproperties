@@ -1,0 +1,28 @@
+<app-header *ngIf="(auth$ | async)" [dataUser]="(auth$ | async)"></app-header>
+<div class="row">
+    <div class="d-none d-xl-block menu-container col-3 col-xl-2 bg-color1 p-0 m-0 pt-5">
+        <app-menu></app-menu>
+    </div>
+
+    <div class="container-container flex-1 bg-color5 p-5">
+        <div class="row justify-content-between align-items-center">
+            <h5 class="text-color2">Properties</h5>       
+            <button *ngIf="(auth$ | async) && (auth$ | async).roleid==1" [routerLink]="['/properties/edit-properties/0']" class="btn1">ADD</button>
+        </div>
+
+        <div class="row justify-content-start align-items-center mt-5 m-0">
+
+            <div (click)="goProperty(property.id)" class="row col-12 col-xl-3 mt-4 p-0 m-0 justify-content-center" *ngFor="let property of properties">
+                <nz-card nzHoverable style="width:95%" [nzCover]="coverTemplate">
+                    <nz-card-meta nzTitle="{{property.name}}" nzDescription="{{property.description}}"></nz-card-meta>
+                </nz-card>
+                <ng-template #coverTemplate>
+                    <div class="image col-12" [ngStyle]="{'background-image': 'url('+property.files[0].file+')'}"></div>
+                </ng-template>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<app-load *ngIf="isLoad"></app-load>

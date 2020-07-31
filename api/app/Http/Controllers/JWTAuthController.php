@@ -48,7 +48,7 @@ class JWTAuthController extends Controller
                 ));
 
         $role = new Role;
-        $role->userid = $user->id();
+        $role->userid = $user->id;
         $role->roleid = 2; 
         $role->save();
 
@@ -79,6 +79,7 @@ class JWTAuthController extends Controller
         }
         $user = [];
         $user['user'] =  $this->profile();
+        $user['user']['roleid'] = $this->getRole($this->profile()->id);
         $user['token'] = $this->createNewToken($token);
         return $user;
     }
@@ -88,9 +89,16 @@ class JWTAuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+
+    public function getRole($userid){
+        $role = Role::select('roleid')->where('userid', $userid)->first();
+        return $role->roleid;
+
+    }
+
     public function profile()
     {
-        return response()->json(auth()->user());
+        return auth()->user();
     }
 
     /**

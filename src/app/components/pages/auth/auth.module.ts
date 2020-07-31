@@ -2,13 +2,23 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AuthRoutingModule } from './auth-routing.module';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { LoadModule } from '../../partials/load/load.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+  ],
   imports: [
     CommonModule,
-    AuthRoutingModule
+    FormsModule,
+    ReactiveFormsModule,
+    AuthRoutingModule,
+    LoadModule,
   ]
 })
 export class AuthModule { }

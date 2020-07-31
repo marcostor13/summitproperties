@@ -1,0 +1,36 @@
+<app-header *ngIf="(auth$ | async)" [dataUser]="(auth$ | async)"></app-header>
+<div class="row">
+    <div class="d-none d-xl-block menu-container col-3 col-xl-2 bg-color1 p-0 m-0 pt-5">
+        <app-menu></app-menu>
+    </div>
+
+    <div class="container-container flex-1 bg-color5 p-5">
+        <div class="row justify-content-between align-items-center">
+            <h5 class="text-color2">Properties > View Properties</h5>    
+            <div>
+                <button [routerLink]="['/']" class="btn1">BACK</button>  
+            </div>   
+        </div>
+
+        <div class="mt-5">
+
+            <div>
+                <input type="text" class="form-control" [(ngModel)]="nameItem" placeholder="Enter item">
+                <button (click)="addItem()" class="btn2 mt-2">AddList</button>
+            </div>
+            
+            <div class="row m-0 mt-5">
+                <div class="mt-1 col-12 m-0 p-0" *ngFor="let l of list">                    
+                    <label *ngIf="l.state == false"><input type="checkbox"  (change)="changeList($event, l.id)"  > {{l.name}}</label><br>
+                    <label *ngIf="l.state == true"><input type="checkbox"  (change)="changeList($event, l.id)"  checked> {{l.name}}</label><br>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+<app-load *ngIf="isLoad"></app-load>
