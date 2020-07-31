@@ -14,8 +14,8 @@ export class ApiService {
   url: string = ''; // disponer url de su servidor que tiene las páginas PHP
 
   constructor(private http: HttpClient, private store: Store, private router: Router, private storage: AngularFireStorage) {
-    if (window.location.href.indexOf('summitproperties' ) > -1) {
-      this.url = 'http://api.summitproperties.tk/api/';
+    if (window.location.href.indexOf('olimpiadev' ) > -1) {
+      this.url = 'http://api.olimpiadev.tk/api/';
     } else {
       this.url = 'http://localhost:8000/api/';
     }
